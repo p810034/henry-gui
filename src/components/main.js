@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import './main.css'
 
 // fake data generator
 const getItems = (count, offset = 0) =>
@@ -85,44 +86,22 @@ class Main extends Component {
         console.log('sourceeeee',source)
         console.log('destination',destination)
         
-         let buffer = []
-
-         buffer.push(<div>Aasdfasdfsdfasdfsdfsafsdf asdf asdf asdf asdfasdfasd fasd</div>);
-        this.setState({
-          checkValue:  buffer
-        })
-
         // dropped outside the list
         if (!destination) {
             return;
         }
 
         if (source.droppableId === destination.droppableId) {
-            const items = reorder(
-                this.getList(source.droppableId),
-                source.index,
-                destination.index
-            );
 
-            let state = { items };
-
-            if (source.droppableId === 'droppable2') {
-                state = { selected: items };
-            }
-
-            this.setState(state);
         } else {
-            const result = move(
-                this.getList(source.droppableId),
-                this.getList(destination.droppableId),
-                source,
-                destination
-            );
+            let buffer = []
 
-            this.setState({
-                items: result.droppable,
-                selected: result.droppable2
-            });
+            buffer.push({id:'200',content:<div>Aasdfasdfsdfasdfsdfsafsdf asdf asdf asdf asdfasdfasd fasd</div>});
+            buffer.push({id:'201',content:<button>kahufhur</button>});
+    
+           this.setState({
+             checkValue:  buffer
+           })
         }
     };
 
@@ -131,6 +110,7 @@ class Main extends Component {
     render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
+                <div className="aside-wrapper">
                 <Droppable droppableId="droppable">
                     {(provided, snapshot) => (
                         <div
@@ -198,7 +178,7 @@ class Main extends Component {
                         <div
                             ref={provided.innerRef}
                             style={getListStyle(snapshot.isDraggingOver)}>
-                            {this.state.selected.map((item, index) => (
+                            {this.state.checkValue.map((item, index) => (
                                 <Draggable
                                     key={item.id}
                                     draggableId={item.id}
@@ -217,13 +197,12 @@ class Main extends Component {
                                     )}
                                 </Draggable>
                             ))}
-                             {this.state.checkValue && this.state.checkValue}
                             {provided.placeholder}
                         </div>
                     )}
                 </Droppable>
-                {console.log('this.state.checkValue && this.state.checkValue[0]',this.state.checkValue && this.state.checkValue)}
-               
+                    {console.log('checkValue',this.state.checkValue && this.state.checkValue)}
+                    </div>
             </DragDropContext>
         );
     }
