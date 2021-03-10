@@ -31,7 +31,7 @@ const Main = () => {
         }
 
         if (source.droppableId === destination.droppableId) {
-            if (source.droppableId === 'sidebar') {
+            if (source.droppableId === 'sidebar') { //handle drop inside sidebar
                 const reOrderedValue = reOrderWithInSameArea(sidebarElements, source.index, destination.index)
                 setSideBarElements(reOrderedValue);
             }
@@ -40,7 +40,7 @@ const Main = () => {
                 setDroppedElements(reOrderedValue);
             }
 
-        } else {
+        } else { //handle drop into droppable area
             const newHtmlElement = generatedElements(selectedElementType, droppedElements.length);
             let valueAfterElementInsertion = reOrderWithOtherArea(droppedElements,destination.index,newHtmlElement);
             setDroppedElements(valueAfterElementInsertion);
